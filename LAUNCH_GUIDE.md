@@ -35,8 +35,8 @@ Complete walkthrough to go from zero to live in ~30 minutes.
 6. Once created, go to **Settings → API** (left sidebar)
 7. Copy these two values:
    - **Project URL** (looks like `https://xxxxxxxxxxxx.supabase.co`)
-   - **Publishable key** (starts with `sb_publishable_...` — this is the modern key format). sb_publishable_R33bvON-iLfTY18xz1z_3Q_OVHQ0SPn
-   - Note: The legacy `anon` key (starts with `eyJ...`) also works if you prefer it — it's in the "Legacy" tab of the same page https://dncsyidgjpkemqvffghw.supabase.co/rest/v1/
+   - **Publishable key** (starts with `sb_publishable_...`)
+   - Note: The legacy `anon` key (starts with `eyJ...`) also works if you prefer it — it's in the "Legacy" tab of the same page
 
 8. In your project directory, create `.env.local`:
 ```bash
@@ -82,12 +82,12 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_... (or eyJ... legacy)
    - **Recurring:** Monthly
    - Click **"Save product"**
 
-6. After saving, you'll see a **Price ID**. It looks like `price_1XXXXXX...` price_1TdaqsEoqpjozZHs7RsrgxlH
-   - Copy this ID  prod_UcqXjX4P3oF16B
+6. After saving, you'll see a **Price ID**. It looks like `price_1XXXXXX...`
+   - Copy this ID
 
 7. Go to **Developers → API keys** (left sidebar)
-   - Copy the **Secret key** (starts with `sk_test_...`) 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
-   - Also copy the **Publishable key** (starts with `pk_test_...`) pk_live_51RwLV7EoqpjozZHsgkCJt0Eea1nZlBU3zNQT0QYLTRVJssRwth0NX20rdmwiA5D7T3VR5UAzw9unmuq54Vgr8WKR00UubfG4lO
+   - Copy the **Secret key** (starts with `sk_liv...` or `rk_liv...`)
+   - Also copy the **Publishable key** (starts with `pk_liv...`)
 
 8. Add to `.env.local`:
 ```

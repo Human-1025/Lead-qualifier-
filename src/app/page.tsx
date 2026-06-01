@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, CheckCircle, Shield, Zap, MessageSquare } from "lucide-react";
+import { ArrowRight, CheckCircle, Shield, Zap, MessageSquare, TrendingUp, Clock, Star, Building2, HardHat, Hammer, ChevronDown } from "lucide-react";
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
   const handleCheckout = async () => {
     setLoading(true);
@@ -20,166 +21,334 @@ export default function Home() {
       });
       const { url } = await res.json();
       if (url) window.location.href = url;
-    } catch (error) {
-      console.error("Checkout failed:", error);
+    } catch (e) {
+      console.error(e);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-orange-50 to-white">
-      {/* Hero */}
-      <section className="px-4 py-20 max-w-4xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-800 px-4 py-2 rounded-full text-sm font-medium mb-6">
-          <Zap className="w-4 h-4" />
-          For Roofing Contractors
+    <main className="min-h-screen bg-[#0a0a0a]">
+      {/* NAV */}
+      <nav className="fixed top-0 w-full z-50 bg-[#0a0a0a]/90 backdrop-blur-md border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-white font-bold text-lg">LeadQualifier</span>
+            <span className="text-[#f97316] text-xs bg-[#f97316]/10 px-2 py-0.5 rounded-full font-medium">For Roofers</span>
+          </div>
+          <button
+            onClick={handleCheckout}
+            disabled={loading}
+            className="bg-[#f97316] hover:bg-[#ea580c] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-all"
+          >
+            {loading ? "Loading..." : "Get Started"}
+          </button>
         </div>
-        <h1 className="text-5xl font-bold tracking-tight text-gray-900 mb-6">
-          Stop Wasting Time on Tire-Kickers.
-          <br />
-          <span className="text-orange-600">AI Qualifies Every Lead Instantly.</span>
-        </h1>
-        <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-          LeadQualifier screens your website leads 24/7 — asking the right
-          questions, scoring them, and booking qualified jobs straight to your
-          calendar. You only talk to homeowners ready to sign.
-        </p>
-        <button
-          onClick={handleCheckout}
-          disabled={loading}
-          className="bg-orange-600 hover:bg-orange-700 text-white text-lg font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
-        >
-          {loading ? "Loading..." : "Start Free Trial — $299/mo"}
-          <ArrowRight className="inline ml-2 w-5 h-5" />
-        </button>
-        <p className="text-gray-400 text-sm mt-4">
-          7-day free trial. Cancel anytime. No credit card shenanigans.
-        </p>
-      </section>
+      </nav>
 
-      {/* How It Works */}
-      <section className="px-4 py-20 max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-center text-gray-900 mb-16">
-          How It Works
-        </h2>
-        <div className="grid md:grid-cols-3 gap-8">
-          {[
-            {
-              step: "1",
-              title: "Lead Fills Your Form",
-              desc: "Homeowner submits a contact form on your website. LeadQualifier instantly engages.",
-              icon: MessageSquare,
-            },
-            {
-              step: "2",
-              title: "AI Qualifies in Real-Time",
-              desc: "Our AI asks 5-7 smart questions — insurance or cash? timeline? budget? — and scores every lead.",
-              icon: Zap,
-            },
-            {
-              step: "3",
-              title: "Hot Leads Book Instantly",
-              desc: "Qualified leads go straight to your calendar. Tire-kickers get a polite follow-up later.",
-              icon: CheckCircle,
-            },
-          ].map(({ step, title, desc, icon: Icon }) => (
-            <div
-              key={step}
-              className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-            >
-              <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-4">
-                <Icon className="w-6 h-6 text-orange-600" />
-              </div>
-              <div className="text-orange-600 font-bold text-sm mb-2">
-                STEP {step}
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                {title}
-              </h3>
-              <p className="text-gray-600">{desc}</p>
+      {/* HERO */}
+      <section className="pt-32 pb-24 px-6 max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full text-sm text-white/70 mb-8">
+              <HardHat className="w-4 h-4 text-[#f97316]" />
+              Built for Roofing Contractors
             </div>
-          ))}
+            <h1 className="text-5xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight mb-6">
+              Stop Calling<br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f97316] to-[#fb923c]">Tire-Kickers</span>
+              <br />
+              Start Closing Jobs
+            </h1>
+            <p className="text-lg text-white/60 leading-relaxed max-w-xl mb-10">
+              Angi and HomeAdvisor sell your lead to 5 competitors at once, and half the calls you chase are a waste of time. 
+              LeadQualifier qualifies every website lead 24/7 — asks the right questions, scores them instantly, and books 
+              your calendar only with homeowners ready to sign.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 items-start">
+              <button
+                onClick={handleCheckout}
+                disabled={loading}
+                className="bg-[#f97316] hover:bg-[#ea580c] text-white font-semibold px-8 py-4 rounded-xl text-lg shadow-lg shadow-[#f97316]/25 transition-all inline-flex items-center gap-2 group"
+              >
+                {loading ? "Loading..." : "Start Your Free Trial"}
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+              <div className="flex items-center gap-3 text-sm text-white/40 mt-2 sm:mt-0">
+                <CheckCircle className="w-4 h-4 text-green-500" />
+                7 days free · No credit card
+              </div>
+            </div>
+          </div>
+          <div className="relative">
+            {/* Dashboard preview mockup */}
+            <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 shadow-2xl">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-3 h-3 rounded-full bg-red-500" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                  <div className="w-3 h-3 rounded-full bg-green-500" />
+                  <span className="text-white/30 text-xs ml-2">leadqualifier.app/dashboard</span>
+                </div>
+                <span className="text-[#f97316] text-xs font-medium bg-[#f97316]/10 px-3 py-1 rounded-full">LIVE</span>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between bg-white/[0.03] rounded-xl p-4 border border-white/[0.06]">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl">🚨</span>
+                    <div>
+                      <div className="text-white font-semibold text-sm">John M. — Roof Replacement</div>
+                      <div className="text-white/40 text-xs">Just now · Insurance claim · Emergency</div>
+                    </div>
+                  </div>
+                  <div className="bg-green-500/10 text-green-500 text-xs font-bold px-3 py-1 rounded-full">SCORE 96</div>
+                </div>
+                <div className="flex items-center justify-between bg-white/[0.03] rounded-xl p-4 border border-white/[0.06]">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl">⏳</span>
+                    <div>
+                      <div className="text-white font-semibold text-sm">Sarah K. — Gutter Install</div>
+                      <div className="text-white/40 text-xs">2h ago · Cash · Next week</div>
+                    </div>
+                  </div>
+                  <div className="bg-yellow-500/10 text-yellow-500 text-xs font-bold px-3 py-1 rounded-full">SCORE 68</div>
+                </div>
+                <div className="flex items-center justify-between bg-white/[0.03] rounded-xl p-4 border border-white/[0.06]">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl">❄️</span>
+                    <div>
+                      <div className="text-white font-semibold text-sm">Tom R. — Inspection</div>
+                      <div className="text-white/40 text-xs">1d ago · "Just wondering"</div>
+                    </div>
+                  </div>
+                  <div className="bg-gray-500/10 text-gray-400 text-xs font-bold px-3 py-1 rounded-full">SCORE 12</div>
+                </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-white/10">
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    { label: "Hot Leads", value: "3", color: "text-green-500" },
+                    { label: "Warm", value: "7", color: "text-yellow-500" },
+                    { label: "Cold", value: "2", color: "text-gray-400" },
+                  ].map(({ label, value, color }) => (
+                    <div key={label} className="text-center">
+                      <div className={`text-2xl font-bold ${color}`}>{value}</div>
+                      <div className="text-white/40 text-xs">{label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            {/* Glow behind dashboard */}
+            <div className="absolute -inset-20 bg-gradient-radial from-[#f97316]/10 to-transparent blur-3xl -z-10" />
+          </div>
         </div>
       </section>
 
-      {/* Social Proof / Pain */}
-      <section className="px-4 py-20 bg-gray-50">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-            You Know the Problem
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6">
+      {/* THE PAIN (Diagnosis section — RevPartners style) */}
+      <section className="py-24 px-6 border-t border-white/5">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-[#f97316] text-sm font-semibold tracking-[0.2em] mb-4">THE REAL COST OF ANGI</p>
+            <h2 className="text-4xl lg:text-5xl font-bold text-white">They&apos;re Bleeding You Dry</h2>
+            <p className="text-white/50 text-lg mt-4 max-w-2xl mx-auto">
+              Here&apos;s what every lead actually costs you through the big platforms.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-6 mb-16">
+            {[
+              { value: "$50–$300", label: "Per lead on Angi/HomeAdvisor", sub: "And your competitors get it too", icon: TrendingUp },
+              { value: "50%+", label: "Are fake, wrong number, or tire-kickers", sub: "Every call is 15 minutes wasted", icon: Clock },
+              { value: "$1,500+", label: "Per month for qualified leads", sub: "With zero ownership of the pipeline", icon: Shield },
+            ].map(({ value, label, sub, icon: Icon }) => (
+              <div key={label} className="bg-white/[0.03] border border-white/10 rounded-2xl p-8 hover:bg-white/[0.06] transition-colors">
+                <Icon className="w-10 h-10 text-[#f97316] mb-4 opacity-80" />
+                <div className="text-4xl font-bold text-white mb-2">{value}</div>
+                <div className="text-white/70">{label}</div>
+                <div className="text-white/30 text-sm mt-2">{sub}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-6">
+            <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-8">
+              <p className="text-white/40 text-sm mb-6">FROM REDDIT r/ROOFING</p>
+              <blockquote className="text-white/80 text-lg leading-relaxed">
+                &ldquo;Angi sells your info to 5 guys at once. The lead shows up and it&rsquo;s a bidding war for who can 
+                do it cheapest. Never again.&rdquo;
+              </blockquote>
+              <div className="mt-6 text-sm text-white/30">— u/RoofMasterTX, 2.3k upvotes</div>
+            </div>
+            <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-8">
+              <p className="text-white/40 text-sm mb-6">PAIN POINT #1</p>
+              <div className="text-white/80 text-lg leading-relaxed">
+                <strong className="text-white">Every hour on the phone with a tire-kicker</strong> is an hour you&rsquo;re 
+                not on a roof making $300. LeadQualifier eliminates that completely.
+              </div>
+              <div className="mt-6 flex items-center gap-2 text-sm">
+                <div className="w-2 h-2 rounded-full bg-green-500" />
+                <span className="text-green-400 font-medium">Problem solved by automated qualification</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section className="py-24 px-6 border-t border-white/5 bg-[#0d0d0d]">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-[#f97316] text-sm font-semibold tracking-[0.2em] mb-4">HOW IT WORKS</p>
+            <h2 className="text-4xl lg:text-5xl font-bold text-white">From Form Fill to Job Booked</h2>
+            <p className="text-white/50 text-lg mt-4 max-w-2xl mx-auto">
+              Three minutes of setup. All the leads you want — none of the junk.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8">
             {[
               {
-                title: "Wasted Hours",
-                desc: "50% of your website leads are tire-kickers, wrong service type, or just comparing prices. Every hour you spend calling them is an hour you're not on a roof making money.",
+                num: "01",
+                title: "Lead Submits",
+                desc: "Homeowner fills a form on your website or Facebook page. LeadQualifier instantly engages them.",
+                icon: MessageSquare,
               },
               {
-                title: "Leads Slip Through",
-                desc: "You can't answer every form submission at 9pm on a Saturday. By Monday morning, that homeowner with a leaking roof already called your competitor.",
+                num: "02",
+                title: "AI Qualifies Instantly",
+                desc: "Our AI asks 5 questions — insurance or cash? timeline? budget? address? — scores them 0-100 in seconds.",
+                icon: Zap,
               },
               {
-                title: "Angi & HomeAdvisor Are Bleeding You",
-                desc: "$50-300 per lead, half are fake, and you're competing with 5 other roofers on the same lead. They own your pipeline.",
+                num: "03",
+                title: "You Only Get Hot Leads",
+                desc: "90+ scores auto-book your calendar. Warm leads get a follow-up sequence. Cold leads never bother you again.",
+                icon: CheckCircle,
               },
-              {
-                title: "Your Reputation Is Everything",
-                desc: "Every unanswered lead is a bad review waiting to happen. Fast, professional response = 5-star reviews and referrals.",
-              },
-            ].map(({ title, desc }) => (
-              <div
-                key={title}
-                className="bg-white p-6 rounded-xl border border-gray-200"
-              >
-                <h3 className="font-semibold text-gray-900 mb-2">{title}</h3>
-                <p className="text-gray-600 text-sm">{desc}</p>
+            ].map(({ num, title, desc, icon: Icon }) => (
+              <div key={num} className="group relative">
+                <div className="absolute -inset-px bg-gradient-to-b from-[#f97316]/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative bg-[#141414] border border-white/10 rounded-2xl p-8">
+                  <div className="text-5xl font-black text-white/5 mb-4">{num}</div>
+                  <div className="w-12 h-12 bg-[#f97316]/10 rounded-xl flex items-center justify-center mb-6">
+                    <Icon className="w-6 h-6 text-[#f97316]" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3">{title}</h3>
+                  <p className="text-white/50 leading-relaxed">{desc}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Pricing */}
-      <section className="px-4 py-20 max-w-4xl mx-auto text-center">
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">
-          One Plan. Unlimited Leads. No Per-Lead Fees.
-        </h2>
-        <div className="bg-white border-2 border-orange-600 rounded-2xl p-10 max-w-md mx-auto mt-12 shadow-lg">
-          <div className="text-5xl font-bold text-gray-900 mb-2">$299</div>
-          <div className="text-gray-500 mb-6">per month</div>
-          <ul className="text-left space-y-3 mb-8">
+      {/* FEATURES */}
+      <section className="py-24 px-6 border-t border-white/5">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-[#f97316] text-sm font-semibold tracking-[0.2em] mb-4">WHAT YOU GET</p>
+            <h2 className="text-4xl lg:text-5xl font-bold text-white">
+              Everything You Need to Fill Your Pipeline
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              "Unlimited lead qualification",
-              "AI scoring & prioritization",
-              "Auto-booking to your calendar",
-              "Lead dashboard with full history",
-              "Email + SMS alerts for hot leads",
-              "7-day free trial, cancel anytime",
-            ].map((feature) => (
-              <li key={feature} className="flex items-start gap-3 text-gray-700">
-                <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
-                {feature}
-              </li>
+              { icon: Zap, title: "24/7 AI Qualification", desc: "Never miss another after-hours lead. AI responds instantly day or night." },
+              { icon: TrendingUp, title: "Lead Scoring Engine", desc: "Hot (90+) → Warm (60-89) → Cold. Know exactly who to call first." },
+              { icon: MessageSquare, title: "Smart Questions", desc: "AI asks the right questions — insurance claim? timeline? budget? address? — so you don't have to." },
+              { icon: Star, title: "Priority Dashboard", desc: "See every lead ranked by score. One glance and you know your day." },
+              { icon: Building2, title: "Calendar Auto-Booking", desc: "Hot leads automatically book a time on your calendar. No phone tag." },
+              { icon: Shield, title: "No Per-Lead Fees", desc: "$299 flat. Unlimited leads. Angi charges you per tire-kicker. We don't." },
+            ].map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="bg-white/[0.03] border border-white/10 rounded-2xl p-6 hover:bg-white/[0.06] transition-colors">
+                <Icon className="w-8 h-8 text-[#f97316] mb-4" />
+                <h3 className="text-white font-semibold mb-2">{title}</h3>
+                <p className="text-white/50 text-sm leading-relaxed">{desc}</p>
+              </div>
             ))}
-          </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* PRICING */}
+      <section className="py-24 px-6 border-t border-white/5 bg-[#0d0d0d]">
+        <div className="max-w-7xl mx-auto text-center">
+          <p className="text-[#f97316] text-sm font-semibold tracking-[0.2em] mb-4">PRICING</p>
+          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">
+            Less Than 3 Angi Leads a Month
+          </h2>
+          <p className="text-white/50 text-lg mb-16 max-w-2xl mx-auto">
+            No per-lead charges. No contracts. No hidden fees. Just qualified homeowners 
+            ready to write a check.
+          </p>
+
+          <div className="max-w-md mx-auto">
+            <div className="bg-gradient-to-b from-[#f97316]/10 to-transparent border border-[#f97316]/20 rounded-3xl p-10 relative">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#f97316] text-white text-xs font-bold px-4 py-1.5 rounded-full">
+                BEST VALUE
+              </div>
+              <div className="flex items-baseline justify-center gap-1 mb-2">
+                <span className="text-6xl font-bold text-white">$299</span>
+                <span className="text-white/40 text-lg">/mo</span>
+              </div>
+              <p className="text-white/40 text-sm mb-8">Unlimited leads. 7-day free trial.</p>
+              <ul className="text-left space-y-4 mb-10">
+                {[
+                  "Unlimited lead qualifications",
+                  "AI scoring & prioritization",
+                  "Auto-booking to your calendar",
+                  "Lead dashboard with full history",
+                  "Email & SMS alerts for hot leads",
+                  "Cancel anytime, no contract",
+                ].map((feature) => (
+                  <li key={feature} className="flex items-start gap-3 text-white/70">
+                    <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              <button
+                onClick={handleCheckout}
+                disabled={loading}
+                className="w-full bg-[#f97316] hover:bg-[#ea580c] text-white font-semibold py-4 px-6 rounded-xl transition-all text-lg shadow-lg shadow-[#f97316]/25 disabled:opacity-50"
+              >
+                {loading ? "Loading..." : "Start Free Trial"}
+              </button>
+              <p className="text-white/30 text-sm mt-4">Cancel anytime. No questions asked.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-24 px-6 border-t border-white/5">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-white/40 text-sm font-semibold tracking-[0.2em] mb-4">READY TO STOP WASTING TIME?</p>
+          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
+            Start Your 7-Day Free Trial
+          </h2>
+          <p className="text-white/50 text-lg mb-10 max-w-xl mx-auto">
+            No credit card. No commitment. Just a week of seeing what qualified leads actually look like.
+          </p>
           <button
             onClick={handleCheckout}
             disabled={loading}
-            className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 px-6 rounded-xl transition-all disabled:opacity-50"
+            className="bg-[#f97316] hover:bg-[#ea580c] text-white font-semibold px-10 py-4 rounded-xl text-lg shadow-lg shadow-[#f97316]/25 transition-all disabled:opacity-50"
           >
-            {loading ? "Loading..." : "Start 7-Day Free Trial"}
+            {loading ? "Loading..." : "Get Started Free →"}
           </button>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="px-4 py-8 text-center text-gray-400 text-sm">
-        LeadQualifier by{" "}
-        <a href="https://coremind.work" className="underline hover:text-gray-600">
-          coremind.work
-        </a>
-        . Built for roofing contractors who want to stop chasing and start closing.
+      {/* FOOTER */}
+      <footer className="px-6 py-8 border-t border-white/5">
+        <div className="max-w-7xl mx-auto flex items-center justify-between text-sm text-white/30">
+          <span>LeadQualifier by coremind.work</span>
+          <span>© 2026</span>
+        </div>
       </footer>
     </main>
   );
