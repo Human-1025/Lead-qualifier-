@@ -2,7 +2,11 @@
 // Usage: <script src="https://lead-qualifier-core-mind.vercel.app/widget.js" data-owner="CONTRACTOR_ID"></script>
 (function () {
   var script = document.currentScript;
-  var ownerId = (script && script.getAttribute("data-owner")) || "demo";
+  var ownerId = (script && script.getAttribute("data-owner"));
+  if (!ownerId || ownerId === "demo") {
+    console.warn("LeadQualifier: No valid contractor ID. Widget disabled. Add data-owner to your script tag.");
+    return;
+  }
   var color = (script && script.getAttribute("data-color")) || "#0d7373";
   var label = (script && script.getAttribute("data-label")) || "Get a Free Estimate";
   var bizName = (script && script.getAttribute("data-name")) || "";
@@ -153,9 +157,11 @@
       body: JSON.stringify(payload)
     }).then(function (r) { return r.json(); }).then(function (data) {
       hideSpinner();
-      var score = data.score || 75;
-      var emoji = score >= 90 ? "🔥" : score >= 60 ? "✅" : "📋";
-      var title = score >= 90 ? "We'll call you right away!" : score >= 60 ? "Thanks! We'll follow up soon." : "Got it — we'll be in touch.";
+      var lead = data.lead || {};
+      var score = lead.score || 75;
+      var priority = lead.priority || "warm";
+      var emoji = priority === "hot" ? "🔥" : priority === "warm" ? "✅" : "📋";
+      var title = priority === "hot" ? "We'll call you right away!" : priority === "warm" ? "Thanks! We'll follow up soon." : "Got it — we'll be in touch.";
       messages.innerHTML += '<div class="lq-thanks"><div class="emoji">' + emoji + '</div><div class="title">' + title + '</div><div class="sub">Your request has been received. ' + (bizName || "We") + " will contact you shortly.</div></div>";
       body.scrollTop = body.scrollHeight;
     }).catch(function () {

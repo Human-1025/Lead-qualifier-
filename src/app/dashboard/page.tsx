@@ -44,18 +44,11 @@ export default function Dashboard() {
   }, []);
 
   const fetchLeads = async () => {
-    const supabase = getSupabase();
-    if (!supabase) return;
-    const { data } = await supabase.from("leads").select("*").order("created_at", { ascending: false });
-    if (data) {
-      setLeads(data);
-      setStats({
-        hot: data.filter((l) => l.priority === "hot").length,
-        warm: data.filter((l) => l.priority === "warm").length,
-        cold: data.filter((l) => l.priority === "cold").length,
-        total: data.length,
-      });
-    }
+    const res = await fetch("/api/leads/list");
+    if (!res.ok) return;
+    const { leads, stats } = await res.json();
+    if (leads) setLeads(leads);
+    if (stats) setStats(stats);
   };
 
   const filtered = filter === "all" ? leads : leads.filter((l) => l.priority === filter);

@@ -156,7 +156,7 @@ export default function Home() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
-          successUrl: `${window.location.origin}/dashboard`,
+          successUrl: `${window.location.origin}/onboarding`,
           cancelUrl: window.location.origin,
         }),
       })
