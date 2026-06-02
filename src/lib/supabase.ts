@@ -7,6 +7,12 @@ export const supabase = supabaseUrl && supabaseAnonKey
   ? createClient(supabaseUrl, supabaseAnonKey)
   : null;
 
+// Admin client bypasses RLS — used for writes from server-side API routes
+const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+export const supabaseAdmin = serviceRoleKey && supabaseUrl
+  ? createClient(supabaseUrl, serviceRoleKey)
+  : null;
+
 export async function saveLead(
   contractorId: string,
   lead: {
@@ -25,8 +31,8 @@ export async function saveLead(
     recommended_action: string;
   }
 ) {
-  if (!supabase) throw new Error("Supabase not configured");
-  const { data, error } = await supabase
+  if (!supabaseAdmin) throw new Error("Supabase not configured");
+  const { data, error } = await supabaseAdmin
     .from("leads")
     .insert({
       contractor_id: contractorId,
