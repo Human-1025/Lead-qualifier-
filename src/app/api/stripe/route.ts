@@ -5,7 +5,10 @@ function getStripe() {
   if (!process.env.STRIPE_SECRET_KEY) {
     throw new Error("Stripe not configured");
   }
-  return new Stripe(process.env.STRIPE_SECRET_KEY);
+  return new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2025-02-24.acacia",
+    timeout: 15000,
+  });
 }
 
 export async function POST(req: NextRequest) {
