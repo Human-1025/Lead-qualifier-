@@ -35,10 +35,10 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ success: true, lead: qualified });
-  } catch (error) {
-    console.error("Lead submission error:", error);
+  } catch (error: any) {
+    console.error("Lead submission error:", error?.message || error);
     return NextResponse.json(
-      { error: "Failed to process lead" },
+      { error: error?.message || "Failed to process lead" },
       { status: 500 }
     );
   }
