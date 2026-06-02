@@ -19,6 +19,16 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Ensure schema is up to date (first-registration migration)
+    try {
+      await supabaseAdmin.rpc("exec_sql", {
+        sql: "ALTER TABLE IF EXISTS contractors ADD COLUMN IF NOT EXISTS business_name TEXT; ALTER TABLE IF EXISTS contractors ADD COLUMN IF NOT EXISTS phone TEXT; ALTER TABLE IF EXISTS contractors ADD COLUMN IF NOT EXISTS widget_config JSONB DEFAULT '{}'::jsonb; ALTER TABLE IF EXISTS contractors ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT NOW();",
+      });
+    } catch {
+      // exec_sql RPC may not exist — migration will happen via Supabase dashboard
+      // Columns are non-critical for core flow; onboarding save handles missing columns gracefully
+    }
+
     // Create Supabase Auth user (email_confirm: true skips email verification)
     const { data: authUser, error: createError } =
       await supabaseAdmin.auth.admin.createUser({
