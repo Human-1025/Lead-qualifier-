@@ -1,17 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { supabase, supabaseAdmin } from "@/lib/supabase";
-import { ArrowRight, CheckCircle, Copy, Code2, ChevronRight } from "lucide-react";
+import { ArrowRight, CheckCircle, Copy, Code2, ChevronRight, Loader2 } from "lucide-react";
 
 const STEPS = ["Business", "Questions", "Embed"];
 
-// Default qualification questions
 const DEFAULT_QUESTIONS = [
   "What type of work do you need? (Roof replacement, repair, inspection, gutters, other)",
   "Is this an insurance claim or paying out of pocket?",
@@ -28,18 +27,53 @@ export default function OnboardingPage() {
   const [questions, setQuestions] = useState(DEFAULT_QUESTIONS);
   const [saving, setSaving] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
 
-  const contractorId = "demo-contractor"; // Will come from Supabase user metadata in production
+  // Get the authenticated user's ID
+  useEffect(() => {
+    async function loadUser() {
+      if (!supabase) return;
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        setUserId(user.id);
+      } else {
+        router.push("/login");
+      }
+      setAuthLoading(false);
+    }
+    loadUser();
+  }, [router]);
 
-  const embedCode = `<script src="https://lead-qualifier-core-mind.vercel.app/widget.js" data-owner="${contractorId}"></script>`;
+  const contractorId = userId || "";
+  const embedCode = `<script src="https://lead-qualifier-core-mind.vercel.app/widget.js" data-owner="${contractorId}" data-name="${businessName || ""}"></script>`;
 
   const handleSave = async () => {
+    if (!userId) return;
     setSaving(true);
-    // In production: save to Supabase contractors table
-    // For now, just simulate
-    await new Promise((r) => setTimeout(r, 800));
-    setSaving(false);
-    router.push("/dashboard");
+
+    try {
+      // Save to contractors table via admin client
+      const client = supabaseAdmin || supabase;
+      if (client) {
+        const { error } = await client
+          .from("contractors")
+          .upsert({
+            id: userId,
+            email: "", // already set during registration, don't overwrite
+            business_name: businessName,
+            phone: phone,
+            widget_config: { questions },
+          }, { onConflict: "id" });
+
+        if (error) {
+          console.error("Save error:", error);
+        }
+      }
+    } finally {
+      setSaving(false);
+      router.push("/dashboard");
+    }
   };
 
   const copyCode = () => {
@@ -47,6 +81,14 @@ export default function OnboardingPage() {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">

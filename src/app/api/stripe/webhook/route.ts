@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { supabaseAdmin } from "@/lib/supabase";
 
 export async function POST(req: NextRequest) {
   // In production, verify Stripe signature with webhook secret
@@ -11,28 +12,37 @@ export async function POST(req: NextRequest) {
       const customerEmail = session.customer_details?.email;
       const customerId = session.customer as string;
       const subscriptionId = session.subscription as string;
+      const clientReferenceId = session.client_reference_id as string | undefined;
 
-      if (customerEmail) {
-        // Use Supabase Admin to create/update contractor
-        const { supabaseAdmin } = await import("@/lib/supabase");
+      if (customerEmail && supabaseAdmin) {
+        // Use client_reference_id as the contractor ID (it's the Supabase Auth user ID)
+        const contractorId = clientReferenceId;
 
-        if (supabaseAdmin) {
-          // Upsert contractor by email
+        if (contractorId) {
+          // Update the contractor row created during registration
+          const { error: updateError } = await supabaseAdmin
+            .from("contractors")
+            .update({
+              stripe_customer_id: customerId,
+              stripe_subscription_id: subscriptionId,
+              subscription_status: "active",
+            })
+            .eq("id", contractorId);
+
+          if (updateError) {
+            console.error("Contractor update error:", updateError);
+          } else {
+            console.log(`Contractor ${contractorId} subscription active`);
+          }
+        } else {
+          // Fallback: no client_reference_id — match by email (legacy)
           const { data: existing } = await supabaseAdmin
             .from("contractors")
             .select("id")
             .eq("email", customerEmail)
             .single();
 
-          if (!existing) {
-            await supabaseAdmin.from("contractors").insert({
-              email: customerEmail,
-              stripe_customer_id: customerId,
-              stripe_subscription_id: subscriptionId,
-              subscription_status: "active",
-            });
-            console.log(`Contractor created: ${customerEmail}`);
-          } else {
+          if (existing) {
             await supabaseAdmin
               .from("contractors")
               .update({
@@ -41,7 +51,13 @@ export async function POST(req: NextRequest) {
                 subscription_status: "active",
               })
               .eq("id", existing.id);
-            console.log(`Contractor updated: ${customerEmail}`);
+          } else {
+            await supabaseAdmin.from("contractors").insert({
+              email: customerEmail,
+              stripe_customer_id: customerId,
+              stripe_subscription_id: subscriptionId,
+              subscription_status: "active",
+            });
           }
         }
       }

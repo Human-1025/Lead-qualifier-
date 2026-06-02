@@ -131,6 +131,9 @@ export default function Home() {
   const [scrolled, setScrolled] = useState(false)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 })
+  const [showEmailModal, setShowEmailModal] = useState(false)
+  const [email, setEmail] = useState("")
+  const [registering, setRegistering] = useState(false)
 
   const { scrollYProgress } = useScroll()
   const heroScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.97])
@@ -148,22 +151,57 @@ export default function Home() {
     return () => window.removeEventListener("mousemove", handleMouse)
   }, [])
 
-  const handleCheckout = async () => {
+  const handleCheckout = () => {
+    setShowEmailModal(true)
+  }
+
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email || registering) return
+    setRegistering(true)
     setLoading(true)
+
     try {
+      // 1. Create Supabase user + contractor via our API
+      const regRes = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      })
+      const regData = await regRes.json()
+      if (!regRes.ok) throw new Error(regData.error || "Registration failed")
+      const userId = regData.userId
+
+      // 2. Send magic link (creates user if needed, sends OTP)
+      const { supabase } = await import("@/lib/supabase")
+      if (supabase) {
+        await supabase.auth.signInWithOtp({
+          email,
+          options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+        })
+      }
+
+      // 3. Create Stripe checkout (with userId as client_reference_id)
       const res = await fetch("/api/stripe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
-          successUrl: `${window.location.origin}/onboarding`,
+          successUrl: `${window.location.origin}/login?email=${encodeURIComponent(email)}&registered=true`,
           cancelUrl: window.location.origin,
+          userId,
         }),
       })
       const { url } = await res.json()
       if (url) window.location.href = url
-    } catch (e) { console.error(e) }
-    finally { setLoading(false) }
+      else throw new Error("No checkout URL returned")
+    } catch (e) {
+      console.error(e)
+      setShowEmailModal(false)
+    } finally {
+      setRegistering(false)
+      setLoading(false)
+    }
   }
 
   return (
@@ -855,6 +893,66 @@ export default function Home() {
           66% { transform: scale(0.9) rotate(-3deg); }
         }
       `}</style>
+
+      {/* Email Modal */}
+      <AnimatePresence>
+        {showEmailModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[1000] flex items-center justify-center p-4"
+          >
+            {/* Backdrop */}
+            <div
+              className="absolute inset-0 bg-background/80 backdrop-blur-sm"
+              onClick={() => !registering && setShowEmailModal(false)}
+            />
+            {/* Modal */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.2 }}
+              className="relative w-full max-w-sm rounded-2xl border border-border/30 bg-card p-6 shadow-2xl"
+            >
+              <button
+                onClick={() => !registering && setShowEmailModal(false)}
+                className="absolute top-3 right-3 text-muted-foreground/40 hover:text-muted-foreground text-lg"
+              >
+                ✕
+              </button>
+              <div className="text-center mb-5">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 mx-auto mb-3">
+                  <div className="h-4 w-4 rounded-sm bg-primary" />
+                </div>
+                <h3 className="text-lg font-medium">Start Your Free Trial</h3>
+                <p className="text-xs text-muted-foreground/60 mt-1">
+                  Enter your email. We&apos;ll send a magic link to access your dashboard after payment.
+                </p>
+              </div>
+              <form onSubmit={handleEmailSubmit} className="space-y-3">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@yourcompany.com"
+                  required
+                  autoFocus
+                  className="w-full px-4 py-2.5 text-sm rounded-xl border border-border/50 bg-background focus:border-primary/50 focus:ring-1 focus:ring-primary/20 outline-none transition-colors"
+                />
+                <Button type="submit" className="w-full" size="lg" disabled={registering}>
+                  {registering ? "Setting up..." : "Continue to Payment"}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+                <p className="text-[10px] text-muted-foreground/40 text-center">
+                  $299/mo · 7-day trial · Cancel anytime
+                </p>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

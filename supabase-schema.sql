@@ -31,11 +31,15 @@ CREATE INDEX IF NOT EXISTS idx_leads_priority ON leads (contractor_id, priority)
 CREATE TABLE IF NOT EXISTS contractors (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   email TEXT UNIQUE NOT NULL,
+  business_name TEXT,
+  phone TEXT,
+  widget_config JSONB DEFAULT '{}'::jsonb,
   stripe_customer_id TEXT,
   stripe_subscription_id TEXT,
   subscription_status TEXT DEFAULT 'trialing',
   trial_ends_at TIMESTAMPTZ,
-  created_at TIMESTAMPTZ DEFAULT NOW()
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- RLS: contractors can only see their own leads

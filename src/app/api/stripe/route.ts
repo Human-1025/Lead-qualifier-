@@ -9,7 +9,7 @@ function getStripeKey(): string {
 export async function POST(req: NextRequest) {
   try {
     const key = getStripeKey();
-    const { priceId, successUrl, cancelUrl } = await req.json();
+    const { priceId, successUrl, cancelUrl, userId } = await req.json();
 
     const body = new URLSearchParams({
       mode: "subscription",
@@ -19,6 +19,11 @@ export async function POST(req: NextRequest) {
       "cancel_url": cancelUrl,
       "metadata[product]": "lead-qualifier",
     });
+
+    // Link Stripe session to our Supabase user via client_reference_id
+    if (userId) {
+      body.append("client_reference_id", userId);
+    }
 
     const response = await fetch("https://api.stripe.com/v1/checkout/sessions", {
       method: "POST",
