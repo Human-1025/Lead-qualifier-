@@ -18,51 +18,35 @@ const NAV_ITEMS = [
 ]
 
 const BONUSES = [
-  { icon: FileText, name: "The 'Never Waste a Lead' Response Scripts", value: "$497", desc: "Done-for-you SMS templates that turn warm leads into booked jobs. Copy, paste, close." },
+  { icon: FileText, name: "The Never Waste a Lead Response Scripts", value: "$497", desc: "Done-for-you SMS templates that turn warm leads into booked jobs. Copy, paste, close." },
   { icon: Calculator, name: "Pipeline Priority Calculator", value: "$297", desc: "Know exactly how many qualified leads you need to hit your revenue goals — in 30 seconds." },
   { icon: BookOpen, name: "Roofer's Guide to Closing Insurance Claims", value: "$397", desc: "Position yourself as the go-to for insurance replacements. Double your average job size." },
   { icon: Phone, name: "VIP Setup Call", value: "$197", desc: "We install LeadQualifier on your website for you. Takes 15 minutes. Zero effort on your end." },
-  { icon: BarChart3, name: "Monthly Lead Review", value: "$599", desc: "We analyze your pipeline every month and optimize your qualification. Like having a marketing agency for $0." },
+  { icon: BarChart3, name: "Monthly Lead Review", value: "$599", desc: "We analyze your pipeline every month and optimize your qualification." },
 ]
 
 const FAQ = [
   { q: "How is this different from Angi or HomeAdvisor?", a: "Angi charges $50–$300 per lead and sells the same lead to 3–5 of your competitors. LeadQualifier is $299 flat for unlimited leads — and every lead is yours exclusively. No bidding war, no per-lead fees, ever." },
   { q: "Do I need to install anything complicated?", a: "One code snippet on your website. Takes 5 minutes. If you don't want to do it, we'll do it for you on the VIP setup call — included free with your trial." },
   { q: "What if my website doesn't get much traffic?", a: "LeadQualifier works with any traffic level. Even 50 visitors/month can generate qualified leads. Plus you can add it to your Facebook page and Google Business Profile." },
-  { q: "Can I cancel anytime?", a: "Yes. No contracts. No hidden fees. No cancellation penalties. Cancel in one click from your dashboard. Your card is never charged during the 7-day trial." },
-  { q: "Will this work for my type of roofing?", a: "Residential, commercial, insurance claims, new construction — the AI adapts to your business. Tell it what you do once, and it asks the right questions for your specific market." },
-  { q: "What happens after the 7-day trial?", a: "If you've qualified at least one real lead (and you will), you decide if $299/mo is worth a pipeline that manages itself. If not, cancel. No questions. No awkward phone calls." },
+  { q: "Can I cancel anytime?", a: "Yes. No contracts. No hidden fees. No cancellation penalties. Cancel in one click from your dashboard." },
+  { q: "Will this work for my type of roofing?", a: "Residential, commercial, insurance claims, new construction — the AI adapts to your business. Tell it what you do once." },
+  { q: "What happens after the 7-day trial?", a: "If you've qualified at least one real lead (and you will), you decide if $299/mo is worth a pipeline that manages itself. If not, cancel. No questions." },
 ]
 
 const FEATURES = [
-  {
-    icon: Zap, title: "24/7 AI Qualification",
-    desc: "Never waste another minute on tire-kickers. AI answers every lead instantly — day or night — asking the right questions before you ever pick up the phone.",
-  },
-  { icon: TrendingUp, title: "Smart Lead Scoring",
-    desc: "Hot (90+), Warm (60–89), Cold. Every lead scored by buying intent. You know exactly who to call first, every time.",
-  },
-  { icon: MessageSquare, title: "Intelligent Questions",
-    desc: "AI asks the critical five — insurance claim? cash or finance? timeline? budget? address? — so you don't have to waste a single call finding out.",
-  },
-  { icon: Star, title: "Priority Dashboard",
-    desc: "Your entire pipeline at one glance. Every lead ranked by score. No spreadsheets, no CRM setup, no training needed.",
-  },
-  { icon: Building2, title: "Calendar Auto-Booking",
-    desc: "Hot leads automatically book a time on your calendar. No phone tag. No back-and-forth texts. They book, you show up, you close.",
-  },
-  { icon: Shield, title: "Zero Per-Lead Fees",
-    desc: "$299 flat. Unlimited leads. Angi charges you per tire-kicker. We only win when you win.",
-  },
+  { icon: Zap, title: "24/7 AI Qualification", desc: "Never waste another minute on tire-kickers. AI answers every lead instantly — day or night — asking the right questions before you ever pick up the phone." },
+  { icon: TrendingUp, title: "Smart Lead Scoring", desc: "Hot (90+), Warm (60–89), Cold. Every lead scored by buying intent. You know exactly who to call first, every time." },
+  { icon: MessageSquare, title: "Intelligent Questions", desc: "AI asks the critical five — insurance claim? cash or finance? timeline? budget? address? — so you don't have to waste a single call finding out." },
+  { icon: Star, title: "Priority Dashboard", desc: "Your entire pipeline at one glance. Every lead ranked by score. No spreadsheets, no CRM setup, no training needed." },
+  { icon: Building2, title: "Calendar Auto-Booking", desc: "Hot leads automatically book a time on your calendar. No phone tag. No back-and-forth texts. They book, you show up, you close." },
+  { icon: Shield, title: "Zero Per-Lead Fees", desc: "$299 flat. Unlimited leads. Angi charges you per tire-kicker. We only win when you win." },
 ]
 
 const STEPS = [
-  { number: "01", title: "Lead Submits",
-    desc: "Homeowner fills a form on your website, Facebook page, or Google Business Profile. LeadQualifier engages within 3 seconds — even at 2am." },
-  { number: "02", title: "AI Qualifies Instantly",
-    desc: "AI asks five targeted questions — insurance or cash? budget range? timeline? scope of work? property address? — and scores the lead 0–100 in real time." },
-  { number: "03", title: "You Close Deals",
-    desc: "Hot leads (90+) auto-book your calendar. Warm leads get a follow-up sequence. Cold leads never reach your phone. Your pipeline runs itself." },
+  { number: "01", title: "Lead Submits", desc: "Homeowner fills a form on your website, Facebook page, or Google Business Profile. LeadQualifier engages within 3 seconds — even at 2am." },
+  { number: "02", title: "AI Qualifies Instantly", desc: "AI asks five targeted questions and scores the lead 0–100 in real time. Hot, warm, or cold — you know instantly." },
+  { number: "03", title: "You Close Deals", desc: "Hot leads (90+) auto-book your calendar. Warm leads get a follow-up sequence. Cold leads never reach your phone." },
 ]
 
 const PAIN_POINTS = [
@@ -109,7 +93,7 @@ export default function Home() {
       {/* Grid overlay */}
       <div className="fixed inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none z-0" />
 
-      {/* NAVIGATION */}
+      {/* NAV */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border" : "bg-transparent"
       }`}>
@@ -155,8 +139,19 @@ export default function Home() {
       <main className="relative z-10">
         {/* ==================== HERO ==================== */}
         <section className="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-28">
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
-          <div className="mx-auto max-w-7xl px-6">
+          {/* Hero background image */}
+          <div className="absolute inset-0 z-0">
+            <img
+              src="https://v3b.fal.media/files/b/0a9cb35a/OTYYlwaSZ06N0EEzr1ZIP_f9662327b80b4f3584e5bfeb41fbb24e.jpg"
+              alt=""
+              className="w-full h-full object-cover opacity-[0.08]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+          </div>
+
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/8 rounded-full blur-[150px] pointer-events-none" />
+
+          <div className="mx-auto max-w-7xl px-6 relative z-10">
             <div className="mx-auto max-w-3xl text-center">
               <div className="mb-8 flex items-center justify-center gap-3">
                 <Badge variant="outline" className="rounded-full px-4 py-1 text-xs font-normal">
@@ -164,17 +159,15 @@ export default function Home() {
                 </Badge>
               </div>
 
-              {/* BAB Framework: Problem → Bridge → After */}
               <h1 className="text-4xl font-medium leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
                 Stop Calling{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary/80 to-primary/60">
                   Tire-Kickers
                 </span>
                 <br />
                 <span className="text-muted-foreground">Start Closing Jobs</span>
               </h1>
 
-              {/* PAS: Agitate the pain, present the solution */}
               <p className="mt-6 text-base text-muted-foreground leading-relaxed max-w-xl mx-auto md:text-lg">
                 Angi sells your lead to five guys at once. Half your calls are people "just wondering."
                 You're running a phone-answering service, not a roofing company.
@@ -194,7 +187,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Price anchor — Hormozi's anchoring sequence */}
               <div className="mt-6 flex items-center justify-center gap-1.5 text-xs text-muted-foreground/60">
                 <span className="line-through">Angi: $50&ndash;$300/lead</span>
                 <span className="text-primary font-medium">&rarr; LeadQualifier: $299 flat</span>
@@ -203,7 +195,7 @@ export default function Home() {
 
             {/* Dashboard mockup */}
             <div className="mt-20 mx-auto max-w-5xl">
-              <div className="relative rounded-xl border border-border bg-card shadow-2xl overflow-hidden">
+              <div className="relative rounded-xl border border-border bg-card/80 backdrop-blur-sm shadow-2xl overflow-hidden">
                 <div className="flex items-center gap-2 border-b border-border px-4 py-3">
                   <div className="flex items-center gap-1.5">
                     <div className="h-2.5 w-2.5 rounded-full bg-red-500/70" />
@@ -257,7 +249,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ==================== PAIN / THE MATH ==================== */}
+        {/* ==================== PAIN ==================== */}
         <section id="features" className="border-t border-border py-20 md:py-28">
           <div className="mx-auto max-w-7xl px-6">
             <div className="mx-auto max-w-2xl text-center">
@@ -283,7 +275,6 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Social proof + math */}
             <div className="mt-8 grid gap-4 md:grid-cols-2">
               <Card className="border-border/60">
                 <CardContent className="p-6">
@@ -302,10 +293,6 @@ export default function Home() {
                     <p className="text-lg font-semibold text-foreground">= $3,000/week in lost revenue</p>
                     <p className="text-xs">LeadQualifier eliminates every unqualified call. Forever. <span className="text-primary">$299 flat.</span></p>
                   </div>
-                  <div className="mt-4 flex items-center gap-2 text-xs">
-                    <div className="h-1.5 w-1.5 rounded-full bg-primary" />
-                    <span className="text-primary/80 font-medium">Solved by automated AI qualification</span>
-                  </div>
                 </CardContent>
               </Card>
             </div>
@@ -313,8 +300,17 @@ export default function Home() {
         </section>
 
         {/* ==================== HOW IT WORKS ==================== */}
-        <section id="how-it-works" className="border-t border-border bg-muted/30 py-20 md:py-28">
-          <div className="mx-auto max-w-7xl px-6">
+        <section id="how-it-works" className="border-t border-border bg-muted/30 py-20 md:py-28 relative overflow-hidden">
+          {/* Background feature image */}
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1/3 h-full opacity-[0.04] pointer-events-none">
+            <img
+              src="https://v3b.fal.media/files/b/0a9cb35a/MZR1vzx0szRjU0Nr4p0pD_f622fc1831d4422fa4551f9ad452b335.jpg"
+              alt=""
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          <div className="mx-auto max-w-7xl px-6 relative z-10">
             <div className="mx-auto max-w-2xl text-center">
               <Badge variant="secondary" className="mb-4 text-xs font-semibold tracking-wider">HOW IT WORKS</Badge>
               <h2 className="text-3xl font-medium tracking-tight md:text-4xl">From Form Fill to Job Booked</h2>
@@ -337,9 +333,18 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ==================== FEATURES GRID ==================== */}
-        <section className="border-t border-border py-20 md:py-28">
-          <div className="mx-auto max-w-7xl px-6">
+        {/* ==================== FEATURES ==================== */}
+        <section className="border-t border-border py-20 md:py-28 relative overflow-hidden">
+          {/* Pipeline background image */}
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1/3 h-full opacity-[0.03] pointer-events-none">
+            <img
+              src="https://v3b.fal.media/files/b/0a9cb35b/5GlxrFMs_nnhIDNOEM06C_75a16af6875948a68eb983c5169c216f.jpg"
+              alt=""
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          <div className="mx-auto max-w-7xl px-6 relative z-10">
             <div className="mx-auto max-w-2xl text-center">
               <Badge variant="secondary" className="mb-4 text-xs font-semibold tracking-wider">EVERYTHING YOU GET</Badge>
               <h2 className="text-3xl font-medium tracking-tight md:text-4xl">Fill Your Pipeline on Autopilot</h2>
@@ -359,7 +364,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ==================== BONUSES (Grand Slam Offer — Branches) ==================== */}
+        {/* ==================== BONUSES ==================== */}
         <section className="border-t border-border bg-muted/30 py-20 md:py-28">
           <div className="mx-auto max-w-7xl px-6">
             <div className="mx-auto max-w-2xl text-center">
@@ -397,12 +402,9 @@ export default function Home() {
             <div className="mx-auto max-w-2xl text-center">
               <Badge variant="secondary" className="mb-4 text-xs font-semibold tracking-wider">PRICING</Badge>
               <h2 className="text-3xl font-medium tracking-tight md:text-4xl">Less Than 3 Angi Leads a Month</h2>
-              <p className="mt-4 text-muted-foreground">
-                No per-lead charges. No contracts. No hidden fees. Just qualified homeowners ready to write a check.
-              </p>
+              <p className="mt-4 text-muted-foreground">No per-lead charges. No contracts. No hidden fees. Just qualified homeowners ready to write a check.</p>
             </div>
 
-            {/* Price anchor */}
             <div className="mt-10 mx-auto max-w-lg text-center">
               <div className="grid grid-cols-2 gap-3 mb-8">
                 <div className="rounded-lg border border-border bg-muted/50 p-4">
@@ -458,9 +460,7 @@ export default function Home() {
                   <Button className="w-full" size="lg" onClick={handleCheckout} disabled={loading}>
                     {loading ? "Loading\u2026" : "Start Free Trial"}
                   </Button>
-                  <p className="text-center text-xs text-muted-foreground/60">
-                    No credit card required. Cancel anytime.
-                  </p>
+                  <p className="text-center text-xs text-muted-foreground/60">No credit card required. Cancel anytime.</p>
                 </CardContent>
               </Card>
             </div>
@@ -499,9 +499,7 @@ export default function Home() {
         <section className="border-t border-border py-20 md:py-28">
           <div className="mx-auto max-w-2xl text-center px-6">
             <Badge variant="secondary" className="mb-4 text-xs font-semibold tracking-wider">YOUR FIRST QUALIFIED LEAD IN UNDER 24 HOURS</Badge>
-            <h2 className="text-3xl font-medium tracking-tight md:text-4xl">
-              Start Your 7-Day Free Trial
-            </h2>
+            <h2 className="text-3xl font-medium tracking-tight md:text-4xl">Start Your 7-Day Free Trial</h2>
             <p className="mt-4 text-muted-foreground max-w-md mx-auto">
               7 days free. No credit card. VIP setup included. If you have a website, you can start qualifying leads tonight — while you sleep.
             </p>
@@ -522,7 +520,6 @@ export default function Home() {
         </section>
       </main>
 
-      {/* FOOTER */}
       <footer className="border-t border-border">
         <div className="mx-auto max-w-7xl px-6 py-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
