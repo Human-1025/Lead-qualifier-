@@ -1,34 +1,44 @@
 import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
 
-function getStripe() {
-  if (!process.env.STRIPE_SECRET_KEY) {
-    throw new Error("Stripe not configured");
-  }
-  return new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: null as any,
-    timeout: 30000,
-    maxNetworkRetries: 3,
-  });
+function getStripeKey(): string {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) throw new Error("Stripe not configured");
+  return key;
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const stripe = getStripe();
+    const key = getStripeKey();
     const { priceId, successUrl, cancelUrl } = await req.json();
 
-    const session = await stripe.checkout.sessions.create({
+    const body = new URLSearchParams({
       mode: "subscription",
-      payment_method_types: ["card"],
-      line_items: [{ price: priceId, quantity: 1 }],
-      success_url: successUrl,
-      cancel_url: cancelUrl,
-      metadata: {
-        product: "lead-qualifier",
-      },
+      "line_items[0][price]": priceId,
+      "line_items[0][quantity]": "1",
+      "success_url": successUrl,
+      "cancel_url": cancelUrl,
+      "metadata[product]": "lead-qualifier",
     });
 
-    return NextResponse.json({ url: session.url });
+    const response = await fetch("https://api.stripe.com/v1/checkout/sessions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${key}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: body.toString(),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return NextResponse.json(
+        { error: data.error?.message || "Stripe API error" },
+        { status: response.status }
+      );
+    }
+
+    return NextResponse.json({ url: data.url });
   } catch (error: any) {
     console.error("Stripe error:", error?.message || error);
     return NextResponse.json(
