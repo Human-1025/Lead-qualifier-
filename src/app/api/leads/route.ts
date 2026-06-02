@@ -17,8 +17,11 @@ export async function POST(req: NextRequest) {
     // Run AI qualification
     const qualified = await qualifyLead(leadData);
 
+    // Generate proper UUID for contractor_id
+    const uuid = crypto.randomUUID();
+
     // Save to database
-    await saveLead(contractorId, {
+    await saveLead(uuid, {
       name: leadData.name,
       phone: leadData.phone || "",
       email: leadData.email || "",
