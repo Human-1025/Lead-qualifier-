@@ -282,140 +282,141 @@ export default function Home() {
           </motion.div>
 
           <div className="mx-auto max-w-7xl px-6 relative z-10 w-full py-16 md:py-24">
-            {/* Bento Grid Hero */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
-              {/* ── Large left block: Headline + CTA (spans 7 cols) ── */}
+            {/* ── Full-width headline row ── */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="mb-12 md:mb-16"
+            >
               <motion.div
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-                className="md:col-span-7 flex flex-col justify-center"
+                transition={{ duration: 0.4, delay: 0.1 }}
+                className="mb-5"
               >
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.1 }}
-                  className="mb-6"
-                >
-                  <Badge variant="outline" className="rounded-full px-3 py-1 text-[10px] border-primary/20 bg-background/50 backdrop-blur-sm">
-                    <Sparkles className="mr-1 h-2.5 w-2.5 text-primary" />
-                    AI-Powered Lead Qualification for Roofers
-                  </Badge>
-                </motion.div>
+                <Badge variant="outline" className="rounded-full px-3 py-1 text-[10px] border-primary/20 bg-background/50 backdrop-blur-sm shadow-sm">
+                  <Sparkles className="mr-1 h-2.5 w-2.5 text-accent" />
+                  AI-Powered Lead Qualification for Roofers
+                </Badge>
+              </motion.div>
 
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light leading-[1.05] tracking-tight">
-                  <KineticText text="Stop paying" className="text-muted-foreground/60" delay={0.3} /><br />
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.6, delay: 0.8 }}
-                    className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-emerald-300 to-primary font-medium"
-                  >
-                    per tire-kicker.
-                  </motion.span><br />
-                  <KineticText text="Start closing" className="text-muted-foreground/60" delay={0.6} /><br />
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.6, delay: 1.2 }}
-                    className="text-foreground font-medium"
-                  >
-                    qualified jobs.
-                  </motion.span>
-                </h1>
-
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 1 }}
-                  className="mt-6 text-sm text-muted-foreground/70 leading-relaxed max-w-md"
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light leading-[1.05] tracking-tight max-w-5xl">
+                <KineticText text="Stop paying" className="text-muted-foreground/50" delay={0.3} />{" "}
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.8 }}
+                  className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-teal-400 to-primary font-medium"
                 >
-                  Angi charges $50–$300 per lead and sells it to 5 guys at once. 
-                  LeadQualifier is one flat price. Unlimited leads. All yours.
-                </motion.p>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 1.3 }}
-                  className="mt-8 flex flex-col sm:flex-row items-start gap-4"
+                  per tire-kicker.
+                </motion.span>
+                <br />
+                <KineticText text="Start closing" className="text-muted-foreground/50" delay={0.6} />{" "}
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 1.2 }}
+                  className="text-foreground font-medium"
                 >
+                  qualified jobs.
+                </motion.span>
+              </h1>
+            </motion.div>
+
+            {/* ── Two-column split: CTA (left) + Stats Widget (right) ── */}
+            <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-stretch">
+              {/* ── Left: CTA + Subtext + Price Anchor ── */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1 }}
+                className="flex flex-col justify-center"
+              >
+                <p className="text-base md:text-lg text-muted-foreground/70 leading-relaxed max-w-md">
+                  Angi charges <span className="text-foreground/80 font-medium">$50–$300 per lead</span>{" "}
+                  and sells it to 5 guys at once. LeadQualifier is{" "}
+                  <span className="text-primary font-medium">one flat price</span>.{" "}
+                  Unlimited leads. All yours.
+                </p>
+
+                <div className="mt-8 flex flex-col sm:flex-row items-start gap-4">
                   <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
                     <Button size="lg" onClick={handleCheckout} disabled={loading}
-                      className="shadow-xl shadow-primary/25 text-base">
+                      className="shadow-xl shadow-primary/20 text-base px-8 py-6">
                       {loading ? "Loading\u2026" : "Start 7-Day Free Trial"}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </motion.div>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground/50 pt-2">
-                    <CheckCircle className="h-3.5 w-3.5 text-primary" />
-                    No credit card &middot; VIP setup included
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground/50 pt-2 sm:pt-3">
+                    <CheckCircle className="h-3.5 w-3.5 text-primary/70" />
+                    No credit card &middot; VIP setup
                   </div>
-                </motion.div>
+                </div>
+
+                {/* Price anchor bar */}
+                <div className="mt-6 flex items-center gap-2 md:gap-3 text-xs text-muted-foreground/40 bg-card/50 backdrop-blur-sm rounded-full px-4 py-2 border border-border/40 w-fit shadow-sm">
+                  <span className="line-through text-muted-foreground/30">Angi: $50&ndash;$300/lead</span>
+                  <span className="text-muted-foreground/20">|</span>
+                  <span className="text-primary font-medium">LeadQualifier: $299/mo unlimited</span>
+                </div>
               </motion.div>
 
-              {/* ── Right block: Live Stats Widget (spans 5 cols) ── */}
+              {/* ── Right: Expanded Live Stats Widget ── */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.7, delay: 0.6 }}
-                className="md:col-span-5"
+                className="h-full"
               >
-                <div className="rounded-2xl border border-border/40 bg-card/40 backdrop-blur-md p-6 md:p-8 h-full flex flex-col justify-between shadow-xl">
-                  <div className="flex items-center justify-between mb-6">
+                <div className="rounded-2xl border border-border/40 bg-card shadow-lg p-7 md:p-9 h-full flex flex-col">
+                  <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-2">
-                      <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-                      <span className="text-[10px] text-muted-foreground/60 uppercase tracking-wider">Live Stats</span>
+                      <div className="h-2.5 w-2.5 rounded-full bg-accent animate-pulse" />
+                      <span className="text-[10px] text-muted-foreground/50 uppercase tracking-widest font-medium">Live Stats</span>
                     </div>
                     <Badge variant="outline" className="text-[9px] px-2 border-primary/20 text-primary/70 bg-primary/[0.03]">
                       <Gauge className="h-2.5 w-2.5 mr-1" /> Real-time
                     </Badge>
                   </div>
 
-                  <div className="space-y-6">
-                    <div>
-                      <div className="text-[10px] text-muted-foreground/50 uppercase tracking-wider mb-1">Leads qualified today</div>
-                      <div className="text-4xl md:text-5xl font-light text-foreground">
-                        <AnimatedCounter end={47} /> <span className="text-lg text-muted-foreground/40">/ 52</span>
-                      </div>
-                      <div className="flex items-center gap-1 mt-1">
-                        <ArrowUpRight className="h-3 w-3 text-primary" />
-                        <span className="text-[10px] text-primary">+12% vs yesterday</span>
-                      </div>
+                  {/* Big counter */}
+                  <div className="mb-8">
+                    <div className="text-[10px] text-muted-foreground/50 uppercase tracking-widest mb-2 font-medium">Leads qualified today</div>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-6xl md:text-7xl font-light text-foreground">
+                        <AnimatedCounter end={47} />
+                      </span>
+                      <span className="text-xl text-muted-foreground/30 font-light">/ 52</span>
                     </div>
-
-                    <Separator className="bg-border/30" />
-
-                    <div className="grid grid-cols-3 gap-4">
-                      {[
-                        { label: "Hot (90+)", value: "12", color: "text-primary", bar: "w-3/4" },
-                        { label: "Warm (60-89)", value: "24", color: "text-yellow-500", bar: "w-1/2" },
-                        { label: "Cold", value: "11", color: "text-muted-foreground", bar: "w-1/4" },
-                      ].map((s) => (
-                        <div key={s.label}>
-                          <div className={`text-lg font-medium ${s.color}`}>{s.value}</div>
-                          <div className="text-[9px] text-muted-foreground/50 uppercase tracking-wider">{s.label}</div>
-                          <div className="mt-1.5 h-1 rounded-full bg-muted/30 overflow-hidden">
-                            <div className={`h-full rounded-full ${s.color === "text-primary" ? "bg-primary/50" : s.color === "text-yellow-500" ? "bg-yellow-500/50" : "bg-muted-foreground/30"}`} style={{width: s.label === "Hot (90+)" ? "75%" : s.label === "Warm (60-89)" ? "50%" : "25%"}} />
-                          </div>
-                        </div>
-                      ))}
+                    <div className="flex items-center gap-1.5 mt-2">
+                      <ArrowUpRight className="h-3.5 w-3.5 text-accent" />
+                      <span className="text-xs text-accent font-medium">+12% vs yesterday</span>
                     </div>
                   </div>
-                </div>
-              </motion.div>
 
-              {/* ── Bottom bar: Price anchor (spans full width) ── */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 1.5 }}
-                className="md:col-span-12"
-              >
-                <div className="flex items-center justify-center gap-2 md:gap-4 text-xs text-muted-foreground/50 bg-card/20 backdrop-blur-sm rounded-full px-4 py-2 border border-border/20 w-fit mx-auto">
-                  <span className="line-through text-muted-foreground/30">Angi: $50&ndash;$300/lead</span>
-                  <span className="text-muted-foreground/20">|</span>
-                  <span className="text-primary font-medium">LeadQualifier: $299/mo &mdash; unlimited</span>
+                  <Separator className="bg-border/30" />
+
+                  {/* Score distribution — bigger bars */}
+                  <div className="mt-6 grid grid-cols-3 gap-6">
+                    {[
+                      { label: "Hot (90+)", value: "12", color: "text-primary", pct: 75 },
+                      { label: "Warm (60-89)", value: "24", color: "text-amber-500", pct: 50 },
+                      { label: "Cold", value: "11", color: "text-muted-foreground/50", pct: 25 },
+                    ].map((s) => (
+                      <div key={s.label}>
+                        <div className={`text-3xl md:text-4xl font-light ${s.color}`}>{s.value}</div>
+                        <div className="text-[10px] text-muted-foreground/50 uppercase tracking-wider mt-1 font-medium">{s.label}</div>
+                        <div className="mt-2 h-1.5 rounded-full bg-muted/50 overflow-hidden">
+                          <div className={`h-full rounded-full ${
+                            s.color === "text-primary" ? "bg-primary/60"
+                            : s.color === "text-amber-500" ? "bg-amber-400/60"
+                            : "bg-muted-foreground/30"
+                          }`} style={{ width: s.pct + "%" }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </motion.div>
             </div>
