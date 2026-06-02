@@ -6,8 +6,9 @@ function getStripe() {
     throw new Error("Stripe not configured");
   }
   return new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: "2026-05-27.dahlia",
-    timeout: 15000,
+    apiVersion: null as any,
+    timeout: 30000,
+    maxNetworkRetries: 3,
   });
 }
 
